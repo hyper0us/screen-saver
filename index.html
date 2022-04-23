@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>screen saver</title>
+</head>
+<body>
+    <div tabindex="0" id="color"><nbsp></div>
+    <script>
+            var r=0, g=0, b=0, r1=1, g1=1, b1=1, rainbow_b=false;
+
+        setInterval(function () {
+            r1 = r>=255?-1:r<=5?1:r1;
+            g1 = g>=255?-1:g<=5?1:g1;
+            b1 = b>=255?-1:b<=5?1:b1;
+            r = (r+5*r1)%256;
+            g = (g+3*g1)%256;
+            b = (b+1*b1)%256;
+            console.log(""+r1+" "+g1+" "+b1);
+            if(rainbow_b == true)
+                document.body.style.backgroundColor="rgb("+r+","+g+","+b+")";
+    }, 10);
+
+        function black() {
+            rainbow_b = false;
+            document.body.style.backgroundColor="black";
+        }
+        function white() {
+            rainbow_b = false;
+            document.body.style.backgroundColor="white";
+        }
+        function rainbow() {
+            rainbow_b = rainbow_b?false:true;
+        }
+        function fullscreen() {
+            var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
+                (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
+                (document.mozFullScreenElement && document.mozFullScreenElement !== null) ||
+                (document.msFullscreenElement && document.msFullscreenElement !== null);
+
+            var docElm = document.documentElement;
+            if (!isInFullScreen) {
+                if (docElm.requestFullscreen) {
+                    docElm.requestFullscreen();
+                } else if (docElm.mozRequestFullScreen) {
+                    docElm.mozRequestFullScreen();
+                } else if (docElm.webkitRequestFullScreen) {
+                    docElm.webkitRequestFullScreen();
+                } else if (docElm.msRequestFullscreen) {
+                    docElm.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        }
+        var div = document.getElementById("color");
+        div.addEventListener("keydown", function(event){
+            if (event.keyCode == 66){
+                black();
+            }
+            else if (event.keyCode == 87){
+                white();
+            }
+            else if (event.keyCode == 82){
+                rainbow();
+            }
+            else if (event.keyCode == 32 || event.keyCode == 70){
+                fullscreen();
+            }
+        });
+
+    </script>
+</body>
+</html>
